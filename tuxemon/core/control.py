@@ -11,12 +11,14 @@ from .components import controller
 from .components import event
 from .components import networking
 from .components import rumble
-from .components.game_event import GAME_EVENT
+from .components.game_event import *
 from .platform import android
 
 # from .components.combat import CombatEngine, CombatRouter
 from .state import StateManager
 from .tools import logger
+
+
 
 
 class Control(StateManager):
@@ -161,6 +163,11 @@ class Control(StateManager):
         self.rumble_manager = rumble.RumbleManager()
         self.rumble = self.rumble_manager.rumbler
 
+
+        #TODO delete this test event
+        pygame.time.set_timer(FOO_EVENT, 5000)
+
+
     def update(self, dt):
         """Checks if a state is done or has called for a game quit.
         State is flipped if neccessary and State.update is called. This
@@ -232,6 +239,10 @@ class Control(StateManager):
 
         """
         for pg_event in pg.event.get():
+            #get voice events
+            for game_event in self.get_voice_event(pg_event):
+                yield game_event
+
             # get system events
             for game_event in self.get_system_event(pg_event):
                 yield game_event
@@ -511,6 +522,14 @@ class Control(StateManager):
         """
         if game_event.type in [GAME_EVENT]:
             yield game_event
+
+    #doesnt actually parse anything, just test code
+    @staticmethod
+    def get_voice_event(game_event):
+        if game_event.type in [FOO_EVENT]:
+            yield game_event
+
+
 
     def toggle_show_fps(self, key):
         """Press f5 to turn on/off displaying the framerate in the caption.

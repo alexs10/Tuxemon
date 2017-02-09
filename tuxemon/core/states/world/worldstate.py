@@ -44,7 +44,7 @@ import pygame
 from core import prepare
 from core import state
 from core import tools
-from core.components.game_event import GAME_EVENT, INPUT_EVENT
+from core.components.game_event import *
 from core.components import map
 from core.components import networking
 from core.components.animation import Task
@@ -324,12 +324,20 @@ class WorldState(state.State):
         :returns: None
 
         """
+
+        print("processing event")
+        if event.type == FOO_EVENT:
+            print("WE FOUND A FOO EVENT BBY")
+            self.player1.facing = "left"
         # Handle Key DOWN events
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_ESCAPE:
                 logger.info("Opening main menu!")
                 self.game.push_state("WorldMenuState")
 
+            if event.key == pygame.K_a:
+                logger.info("Opening main menu!")
+                self.game.push_state("WorldMenuState")
             # If we receive an arrow key press, set the facing and
             # moving direction to that direction
             if event.key == pygame.K_UP:
@@ -390,7 +398,7 @@ class WorldState(state.State):
         players[game.player1.slug] = game.player1
 
         return players
-        
+
     ####################################################
     #                   Map Drawing                    #
     ####################################################
@@ -911,4 +919,3 @@ class WorldState(state.State):
 
                                       }
                         self.game.server.notify_client_interaction(cuuid, event_data)
-
