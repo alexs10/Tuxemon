@@ -18,7 +18,7 @@ from .platform import android
 from .state import StateManager
 from .tools import logger
 
-
+from threading import Timer
 
 
 class Control(StateManager):
@@ -163,9 +163,16 @@ class Control(StateManager):
         self.rumble_manager = rumble.RumbleManager()
         self.rumble = self.rumble_manager.rumbler
 
+        def myFunction():
+            pygame.event.post(pygame.event.Event(MENU_EVENT))
 
+        t = Timer(15.0, myFunction)
+        t.start()
         #TODO delete this test event
-        pygame.time.set_timer(FOO_EVENT, 5000)
+        #pygame.time.set_timer(MENU_EVENT, 4000)
+        #pygame.time.set_timer(SOUTH_EVENT, 3000)
+        #pygame.time.set_timer(EAST_EVENT, 5000)
+
 
 
     def update(self, dt):
@@ -520,13 +527,13 @@ class Control(StateManager):
         :rtype: collections.Iterable[pygame.event.Event]
 
         """
-        if game_event.type in [GAME_EVENT]:
+        if game_event.type in VOICE_EVENT_SET:
             yield game_event
 
     #doesnt actually parse anything, just test code
     @staticmethod
     def get_voice_event(game_event):
-        if game_event.type in [FOO_EVENT]:
+        if game_event.type in [GAME_EVENT, MENU_EVENT]:
             yield game_event
 
 

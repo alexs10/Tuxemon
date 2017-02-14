@@ -11,6 +11,8 @@ from core.components.menu.interface import MenuCursor, MenuItem
 from core.components.sprite import VisualSpriteList, RelativeGroup
 from core.components.ui.draw import GraphicBox
 from core.components.ui.text import TextArea
+from core.components.game_event import *
+
 
 
 def layout(scale):
@@ -394,6 +396,10 @@ class Menu(state.State):
         :param event: pygame.Event
         :returns: None
         """
+        if event.type == MENU_EVENT:
+            self.close()
+            return
+
         if event.type == pygame.KEYDOWN:
 
             # TODO: remove this check each time

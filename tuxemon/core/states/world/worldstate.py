@@ -329,6 +329,29 @@ class WorldState(state.State):
         if event.type == FOO_EVENT:
             print("WE FOUND A FOO EVENT BBY")
             self.player1.facing = "left"
+        elif event.type == MENU_EVENT:
+            print("MENU_EVENT")
+            self.game.push_state("WorldMenuState")
+        elif event.type == SOUTH_EVENT:
+            self.stop_moving()
+            self.player1.direction["down"] = True
+            self.player1.facing = "down"
+        elif event.type == WEST_EVENT:
+            self.stop_moving()
+            self.player1.direction["left"] = True
+            self.player1.facing = "left"
+        elif event.type == NORTH_EVENT:
+            self.stop_moving()
+            self.player1.direction["up"] = True
+            self.player1.facing = "up"
+        elif event.type == EAST_EVENT:
+            self.stop_moving()
+            self.player1.direction["right"] = True
+            self.player1.facing = "right"
+        elif event.type == STOP_EVENT:
+            self.stop_moving();
+
+
         # Handle Key DOWN events
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_ESCAPE:
@@ -386,6 +409,12 @@ class WorldState(state.State):
         # that the world state will be the last running state, before
         # the event engine.
         return event
+
+    def stop_moving(self):
+        self.player1.direction["up"] = False;
+        self.player1.direction["right"] = False;
+        self.player1.direction["down"] = False;
+        self.player1.direction["left"] = False;
 
     def get_all_players(self):
         """Retrieves a list of all npcs and the player.
