@@ -18,26 +18,32 @@ def transcribe_audio(path_to_audio_file):
     speech_to_text = SpeechToText(username=username,
                                   password=password)
 
-    with open(join(dirname(__file__), path_to_audio_file), 'rb') as audio_file:
+    with open(path_to_audio_file, 'rb') as audio_file:
         return speech_to_text.recognize(audio_file,
             content_type='audio/wav')
 
 
 
 def speech_thread():
+    filepath = os.getenv('APPDATA') + "/speech.wav";
+    file = open(filepath, 'w+')
+    file.close()
     while 1:
         try:
             time.sleep(1)
-            recorder = Recorder("speech.wav")
+            recorder = Recorder(filepath)
 
             print("Please say something nice into the microphone\n")
             recorder.record_to_file()
 
             print("Transcribing audio....\n")
-            result = transcribe_audio('speech.wav')
+            result = transcribe_audio(filepath)
 
             text = result['results'][0]['alternatives'][0]['transcript']
             print("Text: " + text + "\n")
-        except:
+        except IOError, e:
+            print(e)
             print("IO error detected")
+        except IndexError, e:
+            print(e)
     return
