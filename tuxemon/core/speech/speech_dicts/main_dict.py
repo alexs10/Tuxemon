@@ -5,5 +5,8 @@ speech_dictionary = {}
 
 def parse_speech(textKey, text):
     textKey_L = textKey.lower()
-    if textKey_L in speech_dictionary:
-        pygame.event.post(speech_dictionary[textKey_L](text))
+    words = textKey_L.split()
+    for word in words:
+        if word in speech_dictionary:
+            print(word)
+            pygame.event.post(speech_dictionary[word](text))
