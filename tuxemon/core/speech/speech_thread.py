@@ -40,8 +40,12 @@ def speech_thread():
             result = transcribe_audio(filepath)
 
             text = result['results'][0]['alternatives'][0]['transcript']
+            text = text.strip()
+            print("text is: " + text);
 
-            if (text == 'menu' or text == 'Menu'):
+            print(len(text))
+            if (text == 'open' or text == 'okay'):
+                print("matched event")
                 pygame.event.post(pygame.event.Event(MENU_EVENT))
 
             print("Text: " + text + "\n")

@@ -163,11 +163,11 @@ class Control(StateManager):
         self.rumble_manager = rumble.RumbleManager()
         self.rumble = self.rumble_manager.rumbler
 
-        def myFunction():
-            pygame.event.post(pygame.event.Event(MENU_EVENT))
+        #def myFunction():
+        #    pygame.event.post(pygame.event.Event(MENU_EVENT))
 
-        t = Timer(15.0, myFunction)
-        t.start()
+        #t = Timer(15.0, myFunction)
+        #t.start()
         #TODO delete this test event
         #pygame.time.set_timer(MENU_EVENT, 4000)
         #pygame.time.set_timer(SOUTH_EVENT, 3000)
