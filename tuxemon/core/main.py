@@ -29,9 +29,16 @@
 #
 from collections import namedtuple
 from functools import partial
-
 from . import prepare
 
+from .speech import speech_thread
+
+import threading
+
+def worker():
+    while(1):
+        print 'BAMF'
+    return;
 
 def adapter(name, *args):
     nt = namedtuple(name, "parameters")
@@ -71,6 +78,14 @@ def main():
 
     add_item = partial(adapter("add_item"))
     Player().add_item(control, add_item('item_capture_device', 1), 0)
+
+    t = threading.Thread(target=speech_thread)
+
+    try:
+        t.start()
+    except (KeyboardInterrupt, SystemExit):
+        cleanup_stop_thread()
+        sys.exit()
 
     # block of code useful for testing
     if 0:
