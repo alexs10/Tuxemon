@@ -1,8 +1,43 @@
 import threading
 import time
 
+import os
+import json
+from os.path import join, dirname
+#from dotenv import load_dotenv
+from watson_developer_cloud import SpeechToTextV1 as SpeechToText
+from watson_developer_cloud import AlchemyLanguageV1 as AlchemyLanguage
+
+from speech_sentiment_python.recorder import Recorder
+
+def transcribe_audio(path_to_audio_file):
+    #username = os.environ.get("BLUEMIX_USERNAME")
+    #password = os.environ.get("BLUEMIX_PASSWORD")
+    username = "af3a03ef-27b9-49a6-94c4-04260b99a4b4"
+    password = "kKsCsPRFfWYq"
+    speech_to_text = SpeechToText(username=username,
+                                  password=password)
+
+    with open(join(dirname(__file__), path_to_audio_file), 'rb') as audio_file:
+        return speech_to_text.recognize(audio_file,
+            content_type='audio/wav')
+
+
+
 def speech_thread():
     while 1:
-        time.sleep(3)
-        print "BAMF"
+        try:
+            time.sleep(1)
+            recorder = Recorder("speech.wav")
+
+            print("Please say something nice into the microphone\n")
+            recorder.record_to_file()
+
+            print("Transcribing audio....\n")
+            result = transcribe_audio('speech.wav')
+
+            text = result['results'][0]['alternatives'][0]['transcript']
+            print("Text: " + text + "\n")
+        except:
+            print("IO error detected")
     return

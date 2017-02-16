@@ -84,7 +84,7 @@ def main():
     try:
         t.start()
     except (KeyboardInterrupt, SystemExit):
-        cleanup_stop_thread()
+        t.stop()
         sys.exit()
 
     # block of code useful for testing
