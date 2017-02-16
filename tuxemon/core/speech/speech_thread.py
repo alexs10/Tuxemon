@@ -10,6 +10,8 @@ from watson_developer_cloud import AlchemyLanguageV1 as AlchemyLanguage
 from core.components.game_event import *
 from speech_sentiment_python.recorder import Recorder
 
+from speech_dicts import *
+
 def transcribe_audio(path_to_audio_file):
     #username = os.environ.get("BLUEMIX_USERNAME")
     #password = os.environ.get("BLUEMIX_PASSWORD")
@@ -44,9 +46,11 @@ def speech_thread():
             print("text is: " + text);
 
             print(len(text))
-            if (text == 'open' or text == 'okay'):
-                print("matched event")
-                pygame.event.post(pygame.event.Event(MENU_EVENT))
+
+            parse_speech(text, result)
+            #if (text == 'open' or text == 'okay'):
+            #    print("matched event")
+            #    pygame.event.post(pygame.event.Event(MENU_EVENT))
 
             print("Text: " + text + "\n")
         except IOError, e:
