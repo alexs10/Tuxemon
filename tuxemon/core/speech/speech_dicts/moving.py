@@ -1,10 +1,10 @@
 from core.components.game_event import *
 from main_dict import speech_dictionary
 
-north_synonyms  = ["north"]
-east_synonyms   = ["east"]
-south_synonyms  = ["south", "now"]
-west_synonyms   = ["west"]
+north_synonyms  = ["north","northbound"]
+east_synonyms   = ["east","eastbound","he's"]
+south_synonyms  = ["south", "now","so","southbound"]
+west_synonyms   = ["west","westbound"]
 
 
 def north_event(speech_text):
