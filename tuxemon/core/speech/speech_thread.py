@@ -7,7 +7,7 @@ from os.path import join, dirname
 #from dotenv import load_dotenv
 from watson_developer_cloud import SpeechToTextV1 as SpeechToText
 from watson_developer_cloud import AlchemyLanguageV1 as AlchemyLanguage
-
+from core.components.game_event import *
 from speech_sentiment_python.recorder import Recorder
 
 def transcribe_audio(path_to_audio_file):
@@ -40,6 +40,10 @@ def speech_thread():
             result = transcribe_audio(filepath)
 
             text = result['results'][0]['alternatives'][0]['transcript']
+
+            if (text == 'menu' or text == 'Menu'):
+                pygame.event.post(pygame.event.Event(MENU_EVENT))
+
             print("Text: " + text + "\n")
         except IOError, e:
             print(e)
