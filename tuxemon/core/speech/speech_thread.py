@@ -32,7 +32,7 @@ def speech_thread():
     file.close()
     while 1:
         try:
-            time.sleep(1)
+            #time.sleep(1)
             recorder = Recorder(filepath)
 
             print("Please say something nice into the microphone\n")
