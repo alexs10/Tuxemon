@@ -400,6 +400,10 @@ class Menu(state.State):
             self.close()
             return
 
+        if event.type == MONSTERS_EVENT:
+            self.open_monster_menu()
+            return
+
         if event.type == pygame.KEYDOWN:
 
             # TODO: remove this check each time
